@@ -1,7 +1,16 @@
-FROM mysql:latest
+FROM python:3.10-alpine
 
-ENV MYSQL_ROOT_PASSWORD=root
+WORKDIR /app
 
-EXPOSE 3306
+COPY requirements.txt ./
 
-CMD ["mysqld"]
+RUN apk update
+RUN apk add bash
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+COPY . .
+
+EXPOSE 5000
+
+CMD ["python", "main.py"]
