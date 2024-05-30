@@ -25,6 +25,35 @@ def getConfigById(user_id):
 
   return jsonify({ "success": userConfig.to_json() }), 200
 
+@app.route("/create_config/<string:user_id>", methods=["POST"])
+def createConfigById(user_id):
+  data = request.get_json()
+
+  layersNum = data.get("layersNum")
+  neuronsNum = data.get("neuronsNum")
+  optimizer = data.get("optimizer")
+  lossFunc = data.get("lossFunc")
+  alpha = data.get("alpha")
+  weightsId = data.get("weightsId")
+
+  config = UserConfig(
+    userId=user_id,
+    layersNum=layersNum,
+    neuronsNum=neuronsNum,
+    optimizer=optimizer,
+    lossFunc=lossFunc,
+    alpha=alpha,
+    weightsId=weightsId
+  )
+
+  try:
+    db.session.add(config)
+    db.session.commit()
+  except DataError as e:
+    return jsonify({ "error": e }), 500
+  
+  return jsonify({ "success": "User Config added successfully!" }), 200
+
 if __name__ == "__main__":
   with app.app_context():
     db.create_all()
