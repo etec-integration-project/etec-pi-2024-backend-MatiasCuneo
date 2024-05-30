@@ -4,6 +4,8 @@ Teniendo en cuenta que la carpeta /tmp/data esta vac√≠a o no existe, al correr:
 
 docker compose up --build -d
 
+Si existe un error de conexi√n con la base de datos, lo m√s probable es que con solo reiniciar el compose con "docker compose start", el problema se vea arreglado
+
 el resultado esperado del siguiente comando:
 
 curl http://localhost:5000
