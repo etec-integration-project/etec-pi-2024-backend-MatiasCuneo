@@ -1,8 +1,11 @@
 import numpy as np
 import os
+import random
 import pandas as pd
 from PIL import Image
 
+
+# ========== PREPROCESADO DE IMAGENES ==========
 def load_dataset(dataset, path):
     data = pd.read_csv(os.path.join(path, dataset) + '.csv')
 
@@ -12,5 +15,16 @@ def load_dataset(dataset, path):
     return np.array(X), np.array(y).astype('uint8')
 
 X, y = load_dataset('train', '../mnist_dataset')
+
+def rotate_images(images, angle):
+    for image in images:
+        img = Image.fromarray(image.reshape(28, 28))
+        rotated_img = img.rotate(random.randint(-(angle), angle))
+        image = np.array(rotated_img)
+        image.flatten()
+    return images
+
+X = X.reshape(X.shape[0], -1).astype(np.float32)
+X = rotate_images(X, 9)
 
 print(X[0])
