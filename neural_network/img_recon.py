@@ -4,7 +4,6 @@ import random
 import pandas as pd
 from PIL import Image
 
-
 # ========== PREPROCESADO DE IMAGENES ==========
 def load_dataset(dataset, path):
     data = pd.read_csv(os.path.join(path, dataset) + '.csv')
