@@ -31,6 +31,12 @@ def translate_images(images):
         image = img.transform(img.size, Image.AFFINE, (1, 0, shift[0], 0, 1, shift[1]))
     return images
 
+keys = np.array(range(X.shape[0]))
+np.random.shuffle(keys)
+
+X = X[keys]
+y = y[keys]
+
 X = X.reshape(X.shape[0], -1).astype(np.float32)
 #X = rotate_images(X, 9)
 X = translate_images(X)
