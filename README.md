@@ -4,6 +4,8 @@ Teniendo en cuenta que la carpeta /tmp/data esta vacía o no existe, al correr:
 
 docker compose up --build -d
 
+Si existe un error de conexi�n con la base de datos, lo m�s probable es que con solo reiniciar el compose con "docker compose start", el problema se vea arreglado
+
 el resultado esperado del siguiente comando:
 
 curl http://localhost:5000
@@ -76,9 +78,3 @@ siendo el resultado esperado la configuración con los datos de ejemplo modifica
     "weightsId": "1234"
   }
 }
-
-========== TESTEO DE RED NEURONAL ==========
-
-En la carpeta 'neural_network' se encuentra un único archivo el cuál será dedicado para el uso de la red neuronal de reconocimiento de imágenes
-
-al ejecutar el archivo python (y si la terminal en la que se ejecuta cuenta con dimensiones adecuadas) se debería esbozar una cuasi-imágen de un numero que cambia con cada ejecución al cuál se le aplico un movimiento mínimo de traslación y rotación, donde cada píxel cuenta con un valor (que representa el brillo del mismo) adecuado para entrenar la IA.
