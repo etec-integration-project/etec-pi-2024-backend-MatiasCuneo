@@ -24,7 +24,15 @@ def rotate_images(images, angle):
         image.flatten()
     return images
 
+def translate_images(images):
+    shift = (random.randint(-5, 5), random.randint(-5, 5))
+    for image in images:
+        img = Image.fromarray(image.reshape(28, 28))
+        image = img.transform(img.size, Image.AFFINE, (1, 0, shift[0], 0, 1, shift[1]))
+    return images
+
 X = X.reshape(X.shape[0], -1).astype(np.float32)
-X = rotate_images(X, 9)
+#X = rotate_images(X, 9)
+X = translate_images(X)
 
 print(X[0])
