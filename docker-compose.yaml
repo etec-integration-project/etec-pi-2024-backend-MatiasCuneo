@@ -11,7 +11,7 @@ services:
       - POSTGRES_DB=app
       - TZ=America/Argentina/Mendoza
 
-  app:
+  backend:
     build:
       context: .
     ports:
@@ -21,3 +21,19 @@ services:
     environment:
       - HOST=postgres
     
+  frontend:
+    build:
+      context: ../FrontEnd
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      - DATABASE_URL=postgresql://greeninv_owner:NKgW92MpoLrc@ep-gentle-river-a5crqmnp-pooler.us-east-2.aws.neon.tech/greeninv?sslmode=require
+      - DIRECT_URL=postgresql://greeninv_owner:NKgW92MpoLrc@ep-gentle-river-a5crqmnp.us-east-2.aws.neon.tech/greeninv?sslmode=require
+      - AUTH_SECRET=PKHiAnvkEAAfJleXR10TH2Fr8Tsb4gGRvVj8ig8HqA
+      - GOOGLE_CLIENT_ID=94128269157-p5ts2gtg496frigeji6c3pib5ietjf4c.apps.googleusercontent.com
+      - GOOGLE_CLIENT_SECRET=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
+      - NEXT_PUBLIC_BACKEND_URL=http://backend:5000
+    stdin_open: true
+    tty: true
