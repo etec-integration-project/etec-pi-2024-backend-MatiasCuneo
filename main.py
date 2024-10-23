@@ -1,8 +1,7 @@
 from flask import request, jsonify
 from sqlalchemy import func
 from config import app, db
-from etec-pi-2024-backend-MatiasCuneo.neural_network.img_recon import
-predict_digit
+from neural_network.img_recon import predict_digit
 
 @app.route("/", methods=["GET"])
 def getOnActive():
