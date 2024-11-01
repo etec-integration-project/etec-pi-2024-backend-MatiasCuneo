@@ -1,16 +1,14 @@
-FROM python:3.10-slim
+FROM tensorflow/tensorflow:2.10.0
 
 WORKDIR /app
 
-COPY requirements.txt ./
+COPY mnist_model.h5 /app/mnist_model.h5
+COPY img_recon.py /app/img_recon.py
+COPY config.py /app/config.py
 
-RUN apt-get update && apt-get install -y bash && rm -rf /var/lib/apt/lists/*
-
-RUN pip install --upgrade pip
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY . .
+EXPOSE 8501
 
-EXPOSE 5000
-
-CMD ["python", "main.py"]
+CMD ["python", "img_recon.py"]
