@@ -12,12 +12,12 @@ def predict_digit(image):
     predictions = model.predict(image)
     return int(predictions.argmax())
 
-@app.route("/", methods=["GET"])
+@app.route("/tf/", methods=["GET"])
 def getOnActive():
   sql = db.session.query(func.current_timestamp()).scalar()
   return str(sql)
 
-@app.route('/predict', methods=['POST'])
+@app.route('/tf/predict', methods=['POST'])
 def predict():
     if 'file' not in request.files:
         return jsonify({"error": "No file part"}), 400
