@@ -4,11 +4,11 @@ from sqlalchemy import func
 from config import app, db
 from PIL import Image
 import numpy as np
+import tempfile
 
 model = tf.keras.models.load_model('mnist_model.h5')
 
 def predict_digit(image):
-    image = (255 - np.array(image).reshape((1, 28, 28, 1)).astype('float32')) / 255
     predictions = model.predict(image)
     return int(predictions.argmax())
 
@@ -24,16 +24,18 @@ def predict():
 
     file = request.files['file']
 
-    if file.filename == '':
-        return jsonify({"error": "No selected file"}), 400
-
     if file:
-        image = Image.open(file).convert('L')
-        image = image.resize((28, 28))
-        image_array = np.array(image)
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp:
+            temp_path = tmp.name
+            file.save(temp_path)
+            print(f"Saved temporary image at {temp_path}")
+
+            image = Image.open(temp_path).convert('L')
+            image = image.resize((28, 28))
+            image = (255 - np.array(image).reshape((1, 28, 28, 1)).astype('float32')) / 255
 
         try:
-            result = predict_digit(image_array)
+            result = predict_digit(image)
             return jsonify({"success": result}), 200
         except:
             return jsonify({"error": "Failed to get prediction" }), 500

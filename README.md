@@ -8,7 +8,7 @@ Si existe un error de conexión con la base de datos, lo más probable es que co
 
 el resultado esperado del siguiente comando:
 
-### curl http://localhost:8501/
+### curl http://localhost/tf/
 
 deberia ser:
 
@@ -17,9 +17,9 @@ deberia ser:
 o en ese estilo de fecha y hora
 
 
-## para probar el CRUD:
+## para probar el modelo:
 
-al correr el siguiente comando con datos de ejemplo para crear una nueva configuración:
+al correr el siguiente comando con una imagen de ejemplo en la ruta a reemplazar se obtiene la prediccion correspondiente:
 
 ### curl -X POST "http://localhost:8501/predict" -F "file=@/path_to_your_image/image.png"
 
